@@ -7,21 +7,27 @@ const Main = () => {
 
   useEffect(() => {
     console.log("1");
-    fetchData();
+    fetchData().then((data) => {
+      pokemonFetcher(data);
+    });
   }, []);
 
-  const fetchData = () => {
-    (async () => {
-      const data = await fetch("https://pokeapi.co/api/v2/pokemon/");
-      let getData = await data.json();
-      for (let i = 0; i < 10; i++) {
-        setChar((char) => [...char, getData.results[i].name]);
-      }
-      //console.log(char);
-      //setImg(getData.sprites.front_default);
+  const pokemonFetcher = (data) => {
+    for (let i = 0; i < 10; i++) {
+      setChar(data.results[i].name);
+    }
+  };
+  const fetchData = async () => {
+    const data = await fetch("https://pokeapi.co/api/v2/pokemon/");
+    let getData = await data.json();
+    return getData;
+    //for (let i = 0; i < 10; i++) {
+    //  setChar((char) => [...char, getData.results[i].name]);
+    //}
+    //console.log(char);
+    //setImg(getData.sprites.front_default);
 
-      //console.log(getData.sprites.front_default);
-    })();
+    //console.log(getData.sprites.front_default);
   };
 
   return (
