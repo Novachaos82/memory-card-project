@@ -5,6 +5,7 @@ import { ScoreBoard } from "./scoreboard";
 const Main = () => {
   const [count, setCount] = useState(0);
   const [pokemon, setPokemon] = useState([]);
+  const [selectedPokes, setSelectedPokes] = useState([]);
 
   useEffect(() => {
     console.log("1");
@@ -30,23 +31,38 @@ const Main = () => {
   };
 
   const handleClick = (e) => {
-    setCount(count + 1);
     shufflePokemon(pokemon);
     checkSelection(e);
-    addClassList(e);
   };
 
   const checkSelection = (e) => {
     if (
-      e.target.parentNode.parentNode.parentNode.className.includes("selected")
+      selectedPokes.includes(
+        e.target.parentNode.parentNode.firstChild.textContent
+      )
     ) {
+      console.log(selectedPokes);
       setCount(0);
+      reset();
+    } else {
+      addSelection(e);
+      setCount(count + 1);
     }
   };
 
-  const addClassList = (e) => {
-    e.target.parentNode.parentNode.parentNode.className =
-      "selected cursor-pointer";
+  const reset = () => {
+    setSelectedPokes([]);
+    console.log(selectedPokes + "oof");
+  };
+
+  const addSelection = (e) => {
+    //e.target.parentNode.parentNode.parentNode.className =
+    //  "selected cursor-pointer";
+    setSelectedPokes((prev) => [
+      ...prev,
+      e.target.parentNode.parentNode.firstChild.textContent,
+    ]);
+    //console.log(selectedPokes);
   };
   const shufflePokemon = (cards) => {
     console.log("click");
