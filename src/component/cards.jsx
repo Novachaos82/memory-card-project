@@ -6,12 +6,15 @@ const Cards = (props) => {
       {props.characters.map((char, index) => {
         return (
           <div
+            id="card"
             key={char.id}
             className="cursor-pointer"
             onClick={props.handleClick}
           >
             <div className=" flex bg-black flex-col items-center justify-center rounded-lg">
-              <div>{char.name}</div>
+              <div>
+                <div>{char.name}</div>
+              </div>
               <div>
                 <img src={char.sprites.front_default} alt="" />
               </div>

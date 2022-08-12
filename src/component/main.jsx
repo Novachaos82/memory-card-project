@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { Cards } from "./cards";
+
+import { ScoreBoard } from "./scoreboard";
 const Main = () => {
   const [count, setCount] = useState(0);
   const [pokemon, setPokemon] = useState([]);
@@ -27,15 +29,35 @@ const Main = () => {
     }
   };
 
-  const shufflePokemon = () => {
+  const handleClick = (e) => {
+    setCount(count + 1);
+    shufflePokemon(pokemon);
+    checkSelection(e);
+    addClassList(e);
+  };
+
+  const checkSelection = (e) => {
+    if (
+      e.target.parentNode.parentNode.parentNode.className.includes("selected")
+    ) {
+      setCount(0);
+    }
+  };
+
+  const addClassList = (e) => {
+    e.target.parentNode.parentNode.parentNode.className =
+      "selected cursor-pointer";
+  };
+  const shufflePokemon = (cards) => {
     console.log("click");
-    console.log([...pokemon].sort(() => Math.random() - 0.5));
-    setPokemon([...pokemon].sort(() => Math.random() - 0.5));
+    console.log([...cards].sort(() => Math.random() - 0.5));
+    setPokemon([...cards].sort(() => Math.random() - 0.5));
   };
 
   return (
     <div className="">
-      <Cards characters={pokemon} handleClick={shufflePokemon} />
+      <Cards characters={pokemon} handleClick={handleClick} />
+      <ScoreBoard score={count} />
     </div>
   );
 };
