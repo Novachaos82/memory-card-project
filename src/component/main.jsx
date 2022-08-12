@@ -27,9 +27,15 @@ const Main = () => {
     }
   };
 
+  const shufflePokemon = () => {
+    console.log("click");
+    console.log([...pokemon].sort(() => Math.random() - 0.5));
+    setPokemon([...pokemon].sort(() => Math.random() - 0.5));
+  };
+
   return (
     <div className="">
-      <Cards characters={pokemon} />
+      <Cards characters={pokemon} handleClick={shufflePokemon} />
     </div>
   );
 };
