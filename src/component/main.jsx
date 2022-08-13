@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
 import { Cards } from "./cards";
+import { Footer } from "./footer";
+import { Header } from "./header";
 
 import { ScoreBoard } from "./scoreboard";
 const Main = () => {
   const [count, setCount] = useState(0);
+  const [highScore, setHighScore] = useState(0);
   const [pokemon, setPokemon] = useState([]);
   const [selectedPokes, setSelectedPokes] = useState([]);
 
@@ -50,8 +53,15 @@ const Main = () => {
     }
   };
 
+  const checkHighScore = (count) => {
+    if (count > highScore) {
+      setHighScore(count);
+    }
+  };
+
   const reset = () => {
     setSelectedPokes([]);
+    checkHighScore(count);
     console.log(selectedPokes + "oof");
   };
 
@@ -71,9 +81,11 @@ const Main = () => {
   };
 
   return (
-    <div className="">
+    <div className="overflow-hidden h-screen flex flex-col">
+      <Header />
+      <ScoreBoard score={count} highscore={highScore} />
       <Cards characters={pokemon} handleClick={handleClick} />
-      <ScoreBoard score={count} />
+      <Footer />
     </div>
   );
 };
