@@ -12,9 +12,6 @@ const Main = () => {
 
   useEffect(() => {
     console.log("1");
-    //fetchData().then((data) => {
-    //  pokemonFetcher(data);
-    //});
     fetchData();
   }, []);
 
@@ -25,17 +22,10 @@ const Main = () => {
         throw new Error("Data coud not be fetched!");
       } else {
         let getData = await data.json();
-        //console.log(getData.name);
-        //console.log(getData);
-        //return getData;
+
         setPokemon((prev) => [...prev, getData]);
       }
     }
-  };
-
-  const handleClick = (e) => {
-    shufflePokemon(pokemon);
-    checkSelection(e);
   };
 
   const checkSelection = (e) => {
@@ -50,12 +40,22 @@ const Main = () => {
     } else {
       addSelection(e);
       setCount(count + 1);
+      checkWin();
     }
   };
 
   const checkHighScore = (count) => {
     if (count > highScore) {
       setHighScore(count);
+    }
+  };
+
+  const checkWin = () => {
+    if (count === 9) {
+      alert("You Won!!! ");
+      setHighScore(10);
+
+      return true;
     }
   };
 
@@ -78,6 +78,11 @@ const Main = () => {
     console.log("click");
     console.log([...cards].sort(() => Math.random() - 0.5));
     setPokemon([...cards].sort(() => Math.random() - 0.5));
+  };
+
+  const handleClick = (e) => {
+    shufflePokemon(pokemon);
+    checkSelection(e);
   };
 
   return (
